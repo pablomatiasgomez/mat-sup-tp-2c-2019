@@ -30,11 +30,11 @@ class LagrangePolynom {
     const terms = this.getLagrangeTerms();
     const termsSolution = terms
       .map(x => x.printStepByStepSolution())
-      .join("\n");
+      .join("<br>");
 
     return (
       termsSolution +
-      "\n" +
+      "<br>" +
       "P(x) = " +
       terms.map(x => x.printTerm()).join(" + ")
     );
