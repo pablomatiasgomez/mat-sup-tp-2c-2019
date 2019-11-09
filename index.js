@@ -54,5 +54,4 @@
     resultsDiv.innerHTML = newtonGregoryPolynom.printStepByStepSolution(false);
   };
 
-
 })();
