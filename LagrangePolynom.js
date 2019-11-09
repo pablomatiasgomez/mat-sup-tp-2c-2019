@@ -8,6 +8,11 @@ class LagrangePolynom {
     this.printStepByStepSolution = this.printStepByStepSolution.bind(this);
   }
 
+  eval(xo) {
+    const terms = this.getLagrangeTerms();
+    return terms.reduce((acc, term) => acc + term.eval(xo), 0)
+  }
+
   addPoints(x, y) {
     this.xs.push(x);
     this.ys.push(y);
