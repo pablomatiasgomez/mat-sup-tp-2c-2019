@@ -69,12 +69,42 @@ class NewtonGregoryPolynom {
 
   getStepByStepSolution() {
     let terms = this.getTerms();
-    // TODO aca habria que imprimir la tablita de las diferencias.
-    let differences = "";
+    let differencesByOrder = this.getDifferencesByOrder();
+
+    let tableHeaders = ["X"].concat(differencesByOrder.map((differences, i) => {
+      return i === 0 ? "Y" : "O<sub>" + i + "</sub>";
+    })).map(header => {
+      return `<th scope="col">${header}</th>`;
+    }).join("");
+
+    let xColumn = this.points.map(point => point.x).join("<hr>");
+    let tableRows = [xColumn].concat(differencesByOrder.map((differences, order) => {
+      let prefix = order > 0 ? ("<br>".repeat(order - 1) + "<hr>") : "";
+      let suffix = order > 0 ? "<hr>" : "";
+      // Marcamos con un badge las diferencias que fueron usadas para armar el polinomio
+      let badgeIndex = this.progressive ? 0 : differences.length - 1;
+      return prefix + differences
+        .map((diff, i)  => i === badgeIndex ? `<span class="badge badge-pill badge-success">${diff}</span>` : diff)
+        .join("<hr>") + suffix;
+    })).map(columns => {
+      return `<td>${columns}</td>`;
+    }).join("");
 
     return `
-      <h5 class="mb-3"><u>Pasos de calculo:</u></h5>
-      ${differences}
+      <h5 class="mb-3"><u>Diferencias finitas de cada nivel:</u></h5>
+      <table class="table table-bordered table-sm newton-gregory-differences-table">
+        <thead>
+          <tr>
+            ${tableHeaders}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            ${tableRows}
+          </tr>
+        </tbody>
+      </table>
+      <span class="text-muted">(Se marcan con verde las diferencias utilizadas para construir el polinomio)</span>
       <br>
       <br>
       <h5 class="mb-3"><u>Polinomio interpolante:</u></h5>

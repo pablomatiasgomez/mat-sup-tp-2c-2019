@@ -32,6 +32,7 @@ class LagrangePolynom {
     return true;
   }
 
+  // TODO habria que considerar que en Lagrange se puede simplificar y por ende el grado dar menor?
   getStepByStepSolution() {
     const terms = this.getLagrangeTerms();
     const termsSolution = terms

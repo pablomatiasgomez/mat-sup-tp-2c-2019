@@ -24,11 +24,11 @@
 
     points.push({ x: x, y: y });
     let row = `
-		<tr id="point-row-${x}">
-			<td>${x}</td>
-			<td>${y}</td>
-			<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="deletePoint(${x});"><span class="fa fa-trash"></span></button></td>
-		</tr>`;
+      <tr id="point-row-${x}">
+        <td>${x}</td>
+        <td>${y}</td>
+        <td><button type="button" class="btn btn-outline-danger btn-sm" onclick="deletePoint(${x});"><span class="fa fa-trash"></span></button></td>
+      </tr>`;
     pointsTableBody.innerHTML += row;
     pointsCounter.innerHTML = points.length.toString();
 
