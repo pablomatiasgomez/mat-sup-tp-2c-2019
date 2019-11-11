@@ -8,7 +8,7 @@ class LagrangeTerm {
     this.printCoefficient = this.printCoefficient.bind(this);
     this.printFactors = this.printFactors.bind(this);
     this.printTerm = this.printTerm.bind(this);
-    this.eval = this.eval.bind(this);
+    this.evaluate = this.evaluate.bind(this);
     this.printStepByStepSolution = this.printStepByStepSolution.bind(this);
 
     this.coefficient = y / this.evalFactors(xs[index]);
@@ -20,7 +20,7 @@ class LagrangeTerm {
     return aux.reduce((acc, xi) => acc * (xo - xi), 1);
   }
 
-  eval(xo) {
+  evaluate(xo) {
     return this.evalFactors(xo) * this.coefficient;
   }
 
@@ -35,7 +35,15 @@ class LagrangeTerm {
   }
 
   printTerm() {
+    if (this.coefficient === 0) return "";
     return this.printCoefficient() + this.printFactors();
+  }
+
+  getDegree() {
+    if (this.coefficient === 0) return 0;
+    const aux = [...this.xs];
+    aux.splice(this.index, 1);
+    return aux.length;
   }
 
   printStepByStepSolution() {

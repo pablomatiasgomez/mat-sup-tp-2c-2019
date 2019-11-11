@@ -5,7 +5,12 @@ class NewtonGregoryTerm {
 
     this.printFactors = this.printFactors.bind(this);
     this.printTerm = this.printTerm.bind(this);
+    this.getDegree = this.getDegree.bind(this);
     this.printStepByStepSolution = this.printStepByStepSolution.bind(this);
+  }
+
+  evaluate(k) {
+    return this.xs.reduce((acc, xi) => acc * (k - xi), 1) * this.coefficient;
   }
 
   printCoefficient() {
@@ -17,20 +22,16 @@ class NewtonGregoryTerm {
   }
 
   printTerm() {
+    if (this.coefficient === 0) return "";
     return this.printCoefficient() + this.printFactors();
   }
 
+  getDegree() {
+    if (this.coefficient === 0) return 0;
+    return this.xs.length;
+  }
+
   printStepByStepSolution() {
-    return "TODO"; // TODO
-    const li = "L" + this.index;
-    return (
-        li +
-        " = " +
-        this.printFactors() +
-        " => " +
-        li +
-        " (xo) = " +
-        this.evalFactors(this.xs[this.index])
-    );
+    return "TODO"; // TODO aca habria que imprimir la tablita de las diferencias.
   }
 }

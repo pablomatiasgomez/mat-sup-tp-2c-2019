@@ -1,21 +1,16 @@
 class LagrangePolynom {
-  constructor() {
-    this.xs = [];
-    this.ys = [];
+  constructor(points) {
+    this.xs = points.map(point => point.x);
+    this.ys = points.map(point => point.y);
 
-    this.addPoints = this.addPoints.bind(this);
     this.getLagrangeTerms = this.getLagrangeTerms.bind(this);
-    this.printStepByStepSolution = this.printStepByStepSolution.bind(this);
+    this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
+    this.evaluate = this.evaluate.bind(this);
   }
 
-  eval(xo) {
+  evaluate(xo) {
     const terms = this.getLagrangeTerms();
-    return terms.reduce((acc, term) => acc + term.eval(xo), 0)
-  }
-
-  addPoints(x, y) {
-    this.xs.push(x);
-    this.ys.push(y);
+    return terms.reduce((acc, term) => acc + term.evaluate(xo), 0);
   }
 
   getLagrangeTerms() {
@@ -26,17 +21,35 @@ class LagrangePolynom {
     return terms;
   }
 
-  printStepByStepSolution() {
+  pointsAreEquispaced() {
+    if (this.xs.length < 2) return true;
+    let space = this.xs[1] - this.xs[0];
+    for (let i = 0; i < this.xs.length - 1; i++) {
+      if ((this.xs[i + 1] - this.xs[i]) !== space) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  getStepByStepSolution() {
     const terms = this.getLagrangeTerms();
     const termsSolution = terms
       .map(x => x.printStepByStepSolution())
       .join("<br>");
 
-    return (
-      termsSolution +
-      "<br>" +
-      "P(x) = " +
-      terms.map(x => x.printTerm()).join(" + ")
-    );
+    return `
+      <h5 class="mb-3"><u>Pasos de calculo:</u></h5>
+      ${termsSolution}
+      <br>
+      <br>
+      <h5 class="mb-3"><u>Polinomio interpolante:</u></h5>
+      <b>P(x) = ${terms.map(x => x.printTerm()).filter(term => !!term).join(" + ")}</b>
+      <br>
+      <br>
+      Grado: ${Math.max(...terms.map(term => term.getDegree()))}
+      <br>
+      Puntos equiespacidos: ${this.pointsAreEquispaced() ? "Si" : "No"}
+    `;
   }
 }

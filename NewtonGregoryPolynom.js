@@ -1,21 +1,25 @@
 class NewtonGregoryPolynom {
-  constructor() {
-    this.points = [];
+  constructor(points, progressive) {
+    this.points = points;
+    this.progressive = progressive;
 
-    this.addPoints = this.addPoints.bind(this);
     this.getTerms = this.getTerms.bind(this);
-    this.printStepByStepSolution = this.printStepByStepSolution.bind(this);
+    this.getDifferencesByOrder = this.getDifferencesByOrder.bind(this);
+    this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
+    this.evaluate = this.evaluate.bind(this);
   }
 
-  addPoints(x, y) {
-    this.points.push({
-      x: x,
-      y: y
-    });
+  evaluate(k) {
+    let terms = this.getTerms();
+    return terms.reduce((acc, term) => acc + term.evaluate(k), 0);
   }
 
-  getTerms(progressive) {
-    let differencesByOrder = []; // index 0 -> valores de y. index 1 -> orden 1
+  /**
+   * returns an array in which the first position are the values given in each point,
+   * and then each index i corresponds to the difference of order i
+   */
+  getDifferencesByOrder() {
+    let differencesByOrder = [];
     let currentDifferences = [];
     this.points.forEach(point => currentDifferences.push(point.y));
     differencesByOrder.push(currentDifferences);
@@ -29,10 +33,14 @@ class NewtonGregoryPolynom {
       differencesByOrder.push(currentDifferences);
       lastDifferences = currentDifferences;
     }
+    return differencesByOrder;
+  }
 
+  getTerms() {
+    let differencesByOrder = this.getDifferencesByOrder();
     let terms = [];
     let xs = this.points.map(point => point.x);
-    if (progressive) {
+    if (this.progressive) {
       // First element of each difference
       let coefficients = differencesByOrder.map(differences => differences[0]);
       for (let i = 0; i < coefficients.length; i++) {
@@ -48,17 +56,34 @@ class NewtonGregoryPolynom {
     return terms;
   }
 
-  printStepByStepSolution(progressive) {
-    const terms = this.getTerms(progressive);
-    const termsSolution = terms
-        .map(x => x.printStepByStepSolution())
-        .join("<br>");
+  pointsAreEquispaced() {
+    if (this.points.length < 2) return true;
+    let space = this.points[1].x - this.points[0].x;
+    for (let i = 0; i < this.points.length - 1; i++) {
+      if ((this.points[i + 1].x - this.points[i].x) !== space) {
+        return false;
+      }
+    }
+    return true;
+  }
 
-    return (
-        termsSolution +
-        "<br>" +
-        "P(x) = " +
-        terms.map(x => x.printTerm()).join(" + ")
-    );
+  getStepByStepSolution() {
+    let terms = this.getTerms();
+    // TODO aca habria que imprimir la tablita de las diferencias.
+    let differences = "";
+
+    return `
+      <h5 class="mb-3"><u>Pasos de calculo:</u></h5>
+      ${differences}
+      <br>
+      <br>
+      <h5 class="mb-3"><u>Polinomio interpolante:</u></h5>
+      <b>P(x) = ${terms.map(x => x.printTerm()).filter(term => !!term).join(" + ")}</b>
+      <br>
+      <br>
+      Grado: ${Math.max(...terms.map(term => term.getDegree()))}
+      <br>
+      Puntos equiespacidos: ${this.pointsAreEquispaced() ? "Si" : "No"}
+    `;
   }
 }

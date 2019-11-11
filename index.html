@@ -37,10 +37,9 @@
 				<table class="table table-bordered table-sm" id="points-table">
 					<thead>
 						<tr>
-							<th scope="col">n</th>
 							<th scope="col">X</th>
 							<th scope="col">Y</th>
-							<!--th scope="col"></th-->
+							<th scope="col"></th>
 						</tr>
 					</thead>
 					<tbody></tbody>
@@ -57,6 +56,20 @@
 				<h4 class="mb-3">Resultados</h4>
 				<div class="row">
 					<div class="col-md-12" id="results"></div>
+				</div>
+				<hr>
+				<div class="row d-none" id="evaluate-container">
+					<div class="col-md-6">
+						<form class="card p-2">
+							<div class="input-group">
+								<input type="text" class="form-control" id="k" placeholder="k">
+								<div class="input-group-append">
+									<button type="button" id="evaluate-polynom" class="btn btn-primary">Evaluar polinomio</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-12" id="evaluate-result"></div>
 				</div>
 			</div>
 		</div>
