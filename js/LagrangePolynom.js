@@ -4,6 +4,7 @@ class LagrangePolynom {
     this.ys = points.map(point => point.y);
 
     this.getLagrangeTerms = this.getLagrangeTerms.bind(this);
+    this.getPolynom = this.getPolynom.bind(this);
     this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
     this.evaluate = this.evaluate.bind(this);
   }
@@ -32,6 +33,11 @@ class LagrangePolynom {
     return true;
   }
 
+  getPolynom() {
+    const terms = this.getLagrangeTerms();
+    return terms.map(x => x.printTerm()).filter(term => !!term).join(" + ");
+  }
+
   // TODO habria que considerar que en Lagrange se puede simplificar y por ende el grado dar menor?
   getStepByStepSolution() {
     const terms = this.getLagrangeTerms();
@@ -45,7 +51,7 @@ class LagrangePolynom {
       <br>
       <br>
       <h5 class="mb-3"><u>Polinomio interpolante:</u></h5>
-      <b>P(x) = ${terms.map(x => x.printTerm()).filter(term => !!term).join(" + ")}</b>
+      <b>P(x) = ${this.getPolynom()}</b>
       <br>
       <br>
       Grado: ${Math.max(...terms.map(term => term.getDegree()))}

@@ -1,3 +1,7 @@
+function fractionHtml(sup, sub) {
+  return `<div class="frac"><span>${sup}</span><span class="bottom">${sub}</span></div>`;
+}
+
 (function() {
   let pointsCounter = document.getElementById("points-counter");
   let addPointBtn = document.getElementById("add-point");
@@ -51,7 +55,11 @@
   let polynom;
   function printSolutionAndEnableEvaluate(newPolynom) {
     if (polynom) {
-      // TODO evaluar si el polinomio nuevo y el viejo son iguales/distintos e informarlo
+      if (newPolynom.getPolynom() !== polynom.getPolynom()) {
+        alert("El polinomio nuevo difiere del anterior. \nPresione aceptar para visualizar el nuevo.");
+      } else {
+        alert("El polinomio no difiere del anterior. \nPresione aceptar para continuar.");
+      }
     }
     polynom = newPolynom;
     resultsDiv.innerHTML = polynom.getStepByStepSolution();
@@ -76,7 +84,7 @@
     if (isNaN(k)) {
       return alert("Debe ingresar un numero");
     }
-    evaluateResultDiv.innerText = `P(${k}) = ${polynom.evaluate(k)}`;
+    evaluateResultDiv.innerHTML = `<b>P(${k}) = ${polynom.evaluate(k)}<b>`;
     kTxt.value = "";
   };
 })();

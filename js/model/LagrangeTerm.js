@@ -25,7 +25,7 @@ class LagrangeTerm {
   }
 
   printCoefficient() {
-    return this.y + "/" + this.evalFactors(this.xs[this.index]);
+    return fractionHtml(this.y, this.evalFactors(this.xs[this.index]));
   }
 
   printFactors() {
@@ -47,14 +47,14 @@ class LagrangeTerm {
   }
 
   printStepByStepSolution() {
-    const li = "L" + this.index;
+    const li = "L<sub>" + this.index + "</sub>";
     return (
       li +
       " = " +
       this.printFactors() +
       " => " +
       li +
-      " (xo) = " +
+      " (x<sub>" + this.index + "</sub>) = " +
       this.evalFactors(this.xs[this.index])
     );
   }

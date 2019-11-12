@@ -5,6 +5,7 @@ class NewtonGregoryPolynom {
 
     this.getTerms = this.getTerms.bind(this);
     this.getDifferencesByOrder = this.getDifferencesByOrder.bind(this);
+    this.getPolynom = this.getPolynom.bind(this);
     this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
     this.evaluate = this.evaluate.bind(this);
   }
@@ -67,6 +68,11 @@ class NewtonGregoryPolynom {
     return true;
   }
 
+  getPolynom() {
+    const terms = this.getTerms();
+    return terms.map(x => x.printTerm()).filter(term => !!term).join(" + ");
+  }
+
   getStepByStepSolution() {
     let terms = this.getTerms();
     let differencesByOrder = this.getDifferencesByOrder();
@@ -108,7 +114,7 @@ class NewtonGregoryPolynom {
       <br>
       <br>
       <h5 class="mb-3"><u>Polinomio interpolante:</u></h5>
-      <b>P(x) = ${terms.map(x => x.printTerm()).filter(term => !!term).join(" + ")}</b>
+      <b>P(x) = ${this.getPolynom()}</b>
       <br>
       <br>
       Grado: ${Math.max(...terms.map(term => term.getDegree()))}
