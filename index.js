@@ -56,9 +56,13 @@ function fractionHtml(sup, sub) {
   function printSolution(newPolynom) {
     if (polynom) {
       if (newPolynom.getPolynom() !== polynom.getPolynom()) {
-        alert("El polinomio nuevo difiere del anterior. \nPresione aceptar para visualizar el nuevo.");
+        alert(
+          "El polinomio nuevo difiere del anterior. \nPresione aceptar para visualizar el nuevo."
+        );
       } else {
-        alert("El polinomio no difiere del anterior. \nPresione aceptar para continuar.");
+        alert(
+          "El polinomio no difiere del anterior. \nPresione aceptar para continuar."
+        );
       }
     }
     polynom = newPolynom;
@@ -68,15 +72,15 @@ function fractionHtml(sup, sub) {
   }
 
   runLagrangeBtn.onclick = function() {
-    printSolution(new LagrangePolynom(points));
+    printSolution(new LagrangePolynom([...points]));
   };
 
   runNewtonProgBtn.onclick = function() {
-    printSolution(new NewtonGregoryPolynom(points, true));
+    printSolution(new NewtonGregoryPolynom([...points], true));
   };
 
   runNewtonRegrBtn.onclick = function() {
-    printSolution(new NewtonGregoryPolynom(points, false));
+    printSolution(new NewtonGregoryPolynom([...points], false));
   };
 
   evaluatePolynomBtn.onclick = function() {
