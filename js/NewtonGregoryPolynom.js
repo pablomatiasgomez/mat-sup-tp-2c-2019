@@ -97,7 +97,7 @@ class NewtonGregoryPolynom {
     }).join("");
 
     return `
-      <h5 class="mb-3"><u>Diferencias finitas de cada nivel:</u></h5>
+      <h6 class="mb-3"><u>Diferencias finitas de cada nivel:</u></h6>
       <table class="table table-bordered table-sm newton-gregory-differences-table">
         <thead>
           <tr>
@@ -117,9 +117,9 @@ class NewtonGregoryPolynom {
       <b>P(x) = ${this.getPolynom()}</b>
       <br>
       <br>
-      Grado: ${Math.max(...terms.map(term => term.getDegree()))}
+      <u>Grado:</u> ${Math.max(...terms.map(term => term.getDegree()))}
       <br>
-      Puntos equiespacidos: ${this.pointsAreEquispaced() ? "Si" : "No"}
+      <u>Puntos equiespacidos:</u> ${this.pointsAreEquispaced() ? "Si" : "No"}
     `;
   }
 }

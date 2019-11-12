@@ -45,15 +45,15 @@ function fractionHtml(sup, sub) {
   let runLagrangeBtn = document.getElementById("run-lagrange");
   let runNewtonProgBtn = document.getElementById("run-newton-prog");
   let runNewtonRegrBtn = document.getElementById("run-newton-regr");
-  let resultsDiv = document.getElementById("results");
 
-  let evaluateContainer = document.getElementById("evaluate-container");
+  let resultsContainer = document.getElementById("results-container");
+  let solutionDiv = document.getElementById("solution");
   let evaluatePolynomBtn = document.getElementById("evaluate-polynom");
   let kTxt = document.getElementById("k");
   let evaluateResultDiv = document.getElementById("evaluate-result");
 
   let polynom;
-  function printSolutionAndEnableEvaluate(newPolynom) {
+  function printSolution(newPolynom) {
     if (polynom) {
       if (newPolynom.getPolynom() !== polynom.getPolynom()) {
         alert("El polinomio nuevo difiere del anterior. \nPresione aceptar para visualizar el nuevo.");
@@ -62,21 +62,21 @@ function fractionHtml(sup, sub) {
       }
     }
     polynom = newPolynom;
-    resultsDiv.innerHTML = polynom.getStepByStepSolution();
-    evaluateContainer.classList.remove("d-none");
+    resultsContainer.classList.remove("d-none");
+    solutionDiv.innerHTML = polynom.getStepByStepSolution();
     evaluateResultDiv.innerText = "";
   }
 
   runLagrangeBtn.onclick = function() {
-    printSolutionAndEnableEvaluate(new LagrangePolynom(points));
+    printSolution(new LagrangePolynom(points));
   };
 
   runNewtonProgBtn.onclick = function() {
-    printSolutionAndEnableEvaluate(new NewtonGregoryPolynom(points, true));
+    printSolution(new NewtonGregoryPolynom(points, true));
   };
 
   runNewtonRegrBtn.onclick = function() {
-    printSolutionAndEnableEvaluate(new NewtonGregoryPolynom(points, false));
+    printSolution(new NewtonGregoryPolynom(points, false));
   };
 
   evaluatePolynomBtn.onclick = function() {
