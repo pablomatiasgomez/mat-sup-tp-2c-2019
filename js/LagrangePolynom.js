@@ -7,6 +7,7 @@ class LagrangePolynom {
     this.getPolynom = this.getPolynom.bind(this);
     this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
     this.evaluate = this.evaluate.bind(this);
+    this.getReducedExpression = this.getReducedExpression.bind(this);
   }
 
   evaluate(xo) {
@@ -54,9 +55,15 @@ class LagrangePolynom {
       <b>P(x) = ${this.getPolynom()}</b>
       <br>
       <br>
-      <u>Grado:</u> ${Math.max(...terms.map(term => term.getDegree()))}
+      <u>Grado:</u> ${this.getReducedExpression()._maxDegree()}
       <br>
       <u>Puntos equiespacidos:</u> ${this.pointsAreEquispaced() ? "Si" : "No"}
     `;
+  }
+
+  getReducedExpression() {
+    return this.getLagrangeTerms()
+      .map(term => term.getReducedExpression())
+      .reduce((acc, expr) => acc.add(expr), new algebra.Expression());
   }
 }
