@@ -6,7 +6,6 @@ class NewtonGregoryTerm {
     this.printFactors = this.printFactors.bind(this);
     this.printTerm = this.printTerm.bind(this);
     this.getDegree = this.getDegree.bind(this);
-    this.printStepByStepSolution = this.printStepByStepSolution.bind(this);
   }
 
   evaluate(k) {
@@ -14,7 +13,8 @@ class NewtonGregoryTerm {
   }
 
   printCoefficient() {
-    return this.coefficient;
+    // For printing we want to cut it to 2 decimals.
+    return floatToString(this.coefficient);
   }
 
   printFactors() {
@@ -31,7 +31,4 @@ class NewtonGregoryTerm {
     return this.xs.length;
   }
 
-  printStepByStepSolution() {
-    return "TODO"; // TODO aca habria que imprimir la tablita de las diferencias.
-  }
 }

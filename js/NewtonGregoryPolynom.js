@@ -6,6 +6,7 @@ class NewtonGregoryPolynom {
     this.getTerms = this.getTerms.bind(this);
     this.getDifferencesByOrder = this.getDifferencesByOrder.bind(this);
     this.getPolynom = this.getPolynom.bind(this);
+    this.equals = this.equals.bind(this);
     this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
     this.evaluate = this.evaluate.bind(this);
   }
@@ -73,6 +74,11 @@ class NewtonGregoryPolynom {
     return terms.map(x => x.printTerm()).filter(term => !!term).join(" + ");
   }
 
+  equals(other) {
+    if (!(other instanceof NewtonGregoryPolynom)) return false;
+    return this.getPolynom() === other.getPolynom();
+  }
+
   getStepByStepSolution() {
     let terms = this.getTerms();
     let differencesByOrder = this.getDifferencesByOrder();
@@ -90,6 +96,7 @@ class NewtonGregoryPolynom {
       // Marcamos con un badge las diferencias que fueron usadas para armar el polinomio
       let badgeIndex = this.progressive ? 0 : differences.length - 1;
       return prefix + differences
+        .map(floatToString)
         .map((diff, i)  => i === badgeIndex ? `<span class="badge badge-pill badge-success">${diff}</span>` : diff)
         .join("<hr>") + suffix;
     })).map(columns => {

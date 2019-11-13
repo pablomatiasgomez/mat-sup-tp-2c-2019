@@ -4,9 +4,10 @@ class LagrangePolynom {
     this.ys = points.map(point => point.y);
 
     this.getLagrangeTerms = this.getLagrangeTerms.bind(this);
-    this.getPolynom = this.getPolynom.bind(this);
     this.getStepByStepSolution = this.getStepByStepSolution.bind(this);
     this.evaluate = this.evaluate.bind(this);
+    this.equals = this.equals.bind(this);
+    this.getDegree = this.getDegree.bind(this);
     this.getReducedExpression = this.getReducedExpression.bind(this);
   }
 
@@ -34,12 +35,11 @@ class LagrangePolynom {
     return true;
   }
 
-  getPolynom() {
-    const terms = this.getLagrangeTerms();
-    return terms.map(x => x.printTerm()).filter(term => !!term).join(" + ");
+  equals(other) {
+    if (!(other instanceof LagrangePolynom)) return false;
+    return this.getReducedExpression().toString() === other.getReducedExpression().toString();
   }
 
-  // TODO habria que considerar que en Lagrange se puede simplificar y por ende el grado dar menor?
   getStepByStepSolution() {
     const terms = this.getLagrangeTerms();
     const termsSolution = terms
@@ -52,16 +52,20 @@ class LagrangePolynom {
       <br>
       <br>
       <h5 class="mb-3"><u>Polinomio interpolante:</u></h5>
-      <b>P(x) = ${this.getPolynom()}</b>
+      <b>P(x) = ${terms.map(x => x.printTerm()).filter(term => !!term).join(" + ")}</b>
       <br>
       <br>
-      <u>Grado:</u> ${this.getReducedExpression()._maxDegree()}
+      <u>Grado:</u> ${this.getDegree()}
       <br>
       <u>Puntos equiespacidos:</u> ${this.pointsAreEquispaced() ? "Si" : "No"}
     `;
   }
 
-  /** Lo usamos simplemente para calcular el grado del polinomio, simplificando terminos. */
+  getDegree() {
+    let expression = this.getReducedExpression();
+    return expression.terms && expression.terms.length ? expression._maxDegree() : 0;
+  }
+
   getReducedExpression() {
     return this.getLagrangeTerms()
       .map(term => term.getReducedExpression())

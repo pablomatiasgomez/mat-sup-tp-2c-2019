@@ -2,6 +2,11 @@ function fractionHtml(sup, sub) {
   return `<div class="frac"><span>${sup}</span><span class="bottom">${sub}</span></div>`;
 }
 
+function floatToString(floatNumber) {
+  // For printing purposes we want to cut it to two decimals.
+  return (Math.round(floatNumber * 100) / 100).toString().replace(".", ",");
+}
+
 (function() {
   let pointsCounter = document.getElementById("points-counter");
   let addPointBtn = document.getElementById("add-point");
@@ -55,7 +60,7 @@ function fractionHtml(sup, sub) {
   let polynom;
   function printSolution(newPolynom) {
     if (polynom) {
-      if (newPolynom.getPolynom() !== polynom.getPolynom()) {
+      if (!newPolynom.equals(polynom)) {
         alert(
           "El polinomio nuevo difiere del anterior. \nPresione aceptar para visualizar el nuevo."
         );
