@@ -56,6 +56,7 @@ function floatToString(floatNumber) {
   let evaluatePolynomBtn = document.getElementById("evaluate-polynom");
   let kTxt = document.getElementById("k");
   let evaluateResultDiv = document.getElementById("evaluate-result");
+  let resetBtn = document.getElementById("reset");
 
   let polynom;
   function printSolution(newPolynom) {
@@ -96,4 +97,12 @@ function floatToString(floatNumber) {
     evaluateResultDiv.innerHTML = `<b>P(${k}) = ${polynom.evaluate(k)}<b>`;
     kTxt.value = "";
   };
+
+  resetBtn.onclick = function() {
+    polynom = undefined;
+    resultsContainer.classList.add("d-none");
+    solutionDiv.innerHTML = "";
+    points.forEach(point => deletePoint(point.x));
+  };
+
 })();
