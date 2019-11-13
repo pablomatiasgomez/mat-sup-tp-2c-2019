@@ -63,7 +63,7 @@ class LagrangeTerm {
 
   getReducedExpression() {
     return this.getXs()
-      .map(x => new algebra.Expression("x").subtract(x))
-      .reduce((acc, expr) => acc.multiply(expr), new algebra.Expression(new algebra.Fraction(this.y, this.evalFactors(this.xs[this.index]))));
+      .map(x => new algebra.Expression("x").subtract(algebra.parse(x.toString())))
+      .reduce((acc, expr) => acc.multiply(expr), new algebra.parse((this.y / this.evalFactors(this.xs[this.index])).toString()));
   }
 }

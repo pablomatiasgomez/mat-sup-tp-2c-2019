@@ -61,6 +61,7 @@ class LagrangePolynom {
     `;
   }
 
+  /** Lo usamos simplemente para calcular el grado del polinomio, simplificando terminos. */
   getReducedExpression() {
     return this.getLagrangeTerms()
       .map(term => term.getReducedExpression())
