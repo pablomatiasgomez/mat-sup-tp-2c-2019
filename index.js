@@ -60,6 +60,10 @@ function floatToString(floatNumber) {
 
   let polynom;
   function printSolution(newPolynom) {
+    if (!points.length) {
+      return alert("Debe ingresar al menos un punto.");
+    }
+
     if (polynom) {
       if (!newPolynom.equals(polynom)) {
         alert(
@@ -104,5 +108,4 @@ function floatToString(floatNumber) {
     solutionDiv.innerHTML = "";
     points.forEach(point => deletePoint(point.x));
   };
-
 })();
